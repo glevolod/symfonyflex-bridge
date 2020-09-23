@@ -49,6 +49,7 @@ function mapPlatformShEnvironment() : void
 
     // Map services as feasible.
     mapPlatformShDatabase('database', $config);
+    mapPlatformShDatabaseTutorial('database_tutorial', $config);
     mapPlatformShMongoDatabase('mongodatabase', $config);
 
     // Set the Swiftmailer configuration if it's not set already.
@@ -198,6 +199,22 @@ function mapPlatformShDatabase(string $relationshipName, Config $config) : void
     setEnvVar('DATABASE_URL', $config->formattedCredentials($relationshipName, 'doctrine'));
 }
 
+/**
+ * Maps the specified relationship to the DATABASE_URL environment variable, if available.
+ *
+ * @param string $relationshipName
+ *   The database relationship name.
+ * @param Config $config
+ *   The config object.
+ */
+function mapPlatformShDatabaseTutorial(string $relationshipName, Config $config) : void
+{
+    if (!$config->hasRelationship($relationshipName)) {
+        return;
+    }
+
+    setEnvVar('DATABASE_TUTORIAL_URL', $config->formattedCredentials($relationshipName, 'doctrine'));
+}
 /**
  * Sets a default Doctrine URL.
  *
